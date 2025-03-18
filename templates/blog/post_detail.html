@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <p>Автор: {{ post.author }} | Дата: {{ post.created_at }}</p>
+    <p>{{ post.content }}</p>
+
+    <h2>Комментарии</h2>
+    {% for comment in comments %}
+        <div>
+            <p>{{ comment.content }}</p>
+            <p>Автор: {{ comment.author }} | {{ comment.created_at }}</p>
+        </div>
+        <hr>
+    {% empty %}
+        <p>Комментариев пока нет</p>
+    {% endfor %}
+
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="content" required></textarea>
+        <button type="submit">Добавить комментарий</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Блог{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .nav {
+            margin-bottom: 20px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="{% url 'post_list' %}">Главная</a>
+            {% if user.is_authenticated %}
+                | Привет, {{ user.username }}! 
+                <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                | <a href="{% url 'login' %}">Войти</a> 
+                | <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
